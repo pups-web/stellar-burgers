@@ -1,10 +1,12 @@
 .content {
-  margin: 0 60px;
+  margin: auto; /* Центрирование контента */
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   width: 520px;
+  height: 100%; /* Занять всю высоту */
+  justify-content: center; /* Центрирование по вертикали */
 }
 
 .nutritional_values {
