@@ -17,10 +17,11 @@ import { useNavigate } from 'react-router-dom';
 export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
   const constructorItems = useSelector(getConstructorItems);
-  const orderModalData = useSelector(getOrder);
+  const orderModalData = useSelector(getOrder); // Получение данных модального окна
   const orderRequest = useSelector(getOrderLoading);
-  const navigate = useNavigate();
   const user = useSelector(getUser);
+  const navigate = useNavigate();
+
   const onOrderClick = () => {
     if (!user) {
       return navigate('/login');
@@ -35,8 +36,7 @@ export const BurgerConstructor: FC = () => {
   };
 
   const closeOrderModal = () => {
-    navigate('/', { replace: true });
-    dispatch(clearConstructor());
+    dispatch(clearConstructor()); // Закрытие модального окна
   };
 
   const price = useMemo(
@@ -54,9 +54,9 @@ export const BurgerConstructor: FC = () => {
       price={price}
       orderRequest={orderRequest}
       constructorItems={constructorItems}
-      orderModalData={orderModalData}
+      orderModalData={orderModalData} // Добавлено свойство
+      closeOrderModal={closeOrderModal} // Добавлено свойство
       onOrderClick={onOrderClick}
-      closeOrderModal={closeOrderModal}
     />
   );
 };

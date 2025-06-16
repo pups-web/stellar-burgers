@@ -1,4 +1,4 @@
-import { ReactElement, useEffect } from 'react';
+import { ReactElement } from 'react';
 import { Navigate, useLocation, Outlet } from 'react-router-dom';
 import { Preloader } from '../../components/ui';
 import {
@@ -6,18 +6,16 @@ import {
   getUserisInit,
   getUserLoading
 } from '../../services/chooseOnes';
-import { useSelector, useDispatch } from '../../services/store';
+import { useSelector } from '../../services/store';
 
 type ProtectedRouteProps = {
   children?: ReactElement;
   onlyUnAuth?: boolean;
-  redirectTo?: string;
 };
 
 export const ProtectedRoute = ({
   children,
-  onlyUnAuth = false,
-  redirectTo
+  onlyUnAuth = false
 }: ProtectedRouteProps) => {
   const user = useSelector(getUser);
   const isInit = useSelector(getUserisInit);
@@ -29,8 +27,7 @@ export const ProtectedRoute = ({
   }
 
   if (onlyUnAuth && user) {
-    const redirectPath = redirectTo || location.state?.from?.pathname || '/';
-    return <Navigate to={redirectPath} replace state={{ from: location }} />;
+    return <Navigate to='/profile' replace />;
   }
 
   if (!onlyUnAuth && !user) {

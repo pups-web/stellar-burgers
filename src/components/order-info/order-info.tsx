@@ -16,7 +16,6 @@ export const OrderInfo: FC = () => {
   const orderData = useSelector(getCurrentOrder);
   const ingredients: TIngredient[] = useSelector(getIngredients);
 
-  /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
     if (!orderData || !ingredients.length) return null;
 
@@ -62,5 +61,14 @@ export const OrderInfo: FC = () => {
     return <Preloader />;
   }
 
-  return <OrderInfoUI orderInfo={orderInfo} />;
+  return (
+    <OrderInfoUI
+      orderNumber={orderInfo.number}
+      burgerName={orderInfo.name}
+      orderStatus={orderInfo.status}
+      ingredientsInfo={orderInfo.ingredientsInfo}
+      total={orderInfo.total}
+      date={orderInfo.date}
+    />
+  );
 };

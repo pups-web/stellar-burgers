@@ -74,6 +74,10 @@ export const constructorSlice = createSlice({
         state.isOrderLoading = false;
         state.order = action.payload.order;
         state.orderName = action.payload.name;
+
+        // Очищаем конструктор после успешного создания заказа
+        state.bun = null;
+        state.ingredients = [];
       })
       .addCase(createOrderThunk.rejected, (state, action) => {
         state.isOrderLoading = false;
@@ -81,7 +85,6 @@ export const constructorSlice = createSlice({
       });
   }
 });
-
 export const {
   setBun,
   addIngredient,
