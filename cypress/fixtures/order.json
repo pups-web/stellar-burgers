@@ -1,0 +1,17 @@
+{
+  "success": true,
+  "name": "Марсианский деликатес",
+  "order": {
+    "_id": "abcdef1234567890abcdef12",
+    "status": "done",
+    "name": "Марсианский деликатес",
+    "createdAt": "2025-06-27T12:00:00.000Z",
+    "updatedAt": "2025-06-27T12:05:00.000Z",
+    "number": "90001",
+    "ingredients": {
+      "0": "643d69a5c3f7b9001cfa093c",   
+      "1": "643d69a5c3f7b9001cfa0941",   
+      "2": "643d69a5c3f7b9001cfa0942"   
+    }
+  }
+}
