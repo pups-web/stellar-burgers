@@ -1,0 +1,10 @@
+{
+  "success": true,
+  "refreshToken": "refreshToken",
+  "accessToken": "Bearer test-access-token",
+  "user": {
+    "email": "email@email.com",
+    "name": "Test",
+    "password": "password"
+  }
+}
