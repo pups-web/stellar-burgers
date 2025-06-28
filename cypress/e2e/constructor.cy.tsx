@@ -1,3 +1,16 @@
+// Устранение некорректных недочётов
+
+const selectorModals = '#modals';
+const selectorOrderButton = '[data-cy="order-button"]';
+const selectorOrderPrice = '[data-cy="order-price"]';
+const selectorModalOrderNumber = '[data-cy="modal-order-number"]';
+const selectorModalOverlay = '[data-cy="modal-overlay"]';
+const selectorConstructorTop = '.constructor-element_pos_top span';
+const selectorConstructorBottom = '.constructor-element_pos_bottom span';
+const selectorConstructorRow = '.constructor-element .constructor-element__row span';
+
+
+
 describe('Доступность приложения', () => {
   it('Открывается главная страница', () => {
     // Проверяем, что главная страница доступна
@@ -44,16 +57,16 @@ describe('Работа конструктора бургера', () => {
 
       // Добавляем булку
       cy.get(`[data-cy="ingredient-${bun._id}"] button`).click();
-      cy.get('.constructor-element_pos_top span').should('contain', `${bun.name} (верх)`);
-      cy.get('.constructor-element_pos_bottom span').should('contain', `${bun.name} (низ)`);
+      cy.get(selectorConstructorTop).should('contain', `${bun.name} (верх)`);
+      cy.get(selectorConstructorBottom).should('contain', `${bun.name} (низ)`);
 
       // Добавляем начинку
       cy.get(`[data-cy="ingredient-${main._id}"] button`).click();
-      cy.get('.constructor-element .constructor-element__row span').should('contain', main.name);
+      cy.get(selectorConstructorRow).should('contain', main.name);
 
       // Добавляем соус
       cy.get(`[data-cy="ingredient-${sauce._id}"] button`).click();
-      cy.get('.constructor-element .constructor-element__row span').should('contain', sauce.name);
+      cy.get(selectorConstructorRow).should('contain', sauce.name);
     });
   });
 
@@ -62,14 +75,14 @@ describe('Работа конструктора бургера', () => {
     cy.get('@ingredients').then((ingredients: any) => {
       const bun = ingredients.data[0];
 
-      cy.get('#modals').should('be.empty');
+      cy.get(selectorModals).should('be.empty');
       cy.get(`[data-cy="ingredient-${bun._id}"]`).click();
-      cy.get('#modals').should('not.be.empty');
-      cy.get('#modals button').click();
-      cy.get('#modals').should('be.empty');
+      cy.get(selectorModals).should('not.be.empty');
+      cy.get(`${selectorModals} button`).click();
+      cy.get(selectorModals).should('be.empty');
       cy.get(`[data-cy="ingredient-${bun._id}"]`).click();
-      cy.get('[data-cy="modal-overlay"]').click({ force: true });
-      cy.get('#modals').should('be.empty');
+      cy.get(selectorModalOverlay).click({ force: true });
+      cy.get(selectorModals).should('be.empty');
     });
   });
 
@@ -86,25 +99,25 @@ describe('Работа конструктора бургера', () => {
     cy.get('@ingredients').then((ingredients: any) => {
       const [bun, main, sauce] = ingredients.data;
 
-      cy.get('#modals').should('be.empty');
+      cy.get(selectorModals).should('be.empty');
       cy.get(`[data-cy="ingredient-${bun._id}"] button`).click();
       cy.get(`[data-cy="ingredient-${main._id}"] button`).click();
       cy.get(`[data-cy="ingredient-${sauce._id}"] button`).click();
 
       // Кликаем по кнопке оформления заказа
-      cy.get('[data-cy="order-button"]').click();
+      cy.get(selectorOrderButton).click();
       cy.wait('@orderRequest');
 
       // Проверяем, что модалка открылась и номер заказа совпадает с мок-данными
-      cy.get('#modals').should('not.be.empty');
+      cy.get(selectorModals).should('not.be.empty');
       cy.get('@order').then((order: any) => {
-        cy.get('[data-cy="modal-order-number"]').should('have.text', order.order.number.toString());
+        cy.get(selectorModalOrderNumber).should('have.text', order.order.number.toString());
       });
 
       // Закрываем модалку и проверяем, что цена сброшена
-      cy.get('#modals button').click();
-      cy.get('#modals').should('be.empty');
-      cy.get('[data-cy="order-price"]').should('have.text', '0');
+      cy.get(`${selectorModals} button`).click();
+      cy.get(selectorModals).should('be.empty');
+      cy.get(selectorOrderPrice).should('have.text', '0');
     });
   });
 });
